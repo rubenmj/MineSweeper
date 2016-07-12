@@ -16,16 +16,7 @@ public class Mine {
      */
     public static void main(String[] args) {
         Initialize ini=new Initialize();
-        ini.setMineField("...**...\n**...*..\n.*...*..\n........\n*.*.*...");
-        System.out.println(ini.getHintField());
-        System.out.println("");
-        ini.setMineField("*****\n*...*\n*.*.*\n*...*\n*****");
-        System.out.println(ini.getHintField());
-        System.out.println("");
-        ini.setMineField("*****\n*****\n*****\n*****\n*****");
-        System.out.println(ini.getHintField());
-        System.out.println("");
-        ini.setMineField(".....\n.....\n.....\n.....\n.....");
+        ini.setMineField("*...\n..*.\n....");
         System.out.println(ini.getHintField());
     }
     
