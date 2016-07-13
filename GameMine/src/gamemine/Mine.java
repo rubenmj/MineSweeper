@@ -7,7 +7,7 @@ package gamemine;
 
 /**
  *
- * @author rmj84
+ * @author Rubén Manzano
  */
 public class Mine {
 

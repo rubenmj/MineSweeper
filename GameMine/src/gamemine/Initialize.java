@@ -13,19 +13,19 @@ public class Initialize implements MineSweeper{
         if(mineField==null||mineField.equalsIgnoreCase("")){
             throw new IllegalArgumentException();
         }
-        //Separo el string en partes
+        //split string in different parts
         String[]parts = mineField.split("\\n");
-        //compruebo que el tamaño de las partes sea igual
+        //check that size of the parts are equal
         for(int i=0;i<parts.length-1;i++){
             if(parts[i].length()!=parts[i+1].length())
                 throw new IllegalArgumentException();
         }
-        //creo la matriz
+        //create matrix
         game=new char[parts.length][parts[0].length()];
-        //compruebo que en la cadena solo haya . o *
+        //check that in the String there is . or *
         for(int i=0;i<parts.length;i++){
             for(int j=0;j<parts[i].length();j++){
-                //si es caracter válido lo inserto en la matriz
+                //if the character is valid it is included in the matrix
                 if(parts[i].charAt(j)=='.'||parts[i].charAt(j)=='*'){
                     game[i][j]=parts[i].charAt(j);
                 }else
@@ -36,8 +36,7 @@ public class Initialize implements MineSweeper{
     }
     
     public String getHintField() throws IllegalStateException{
-        //compruebo si se ha llamado a setMineField ya que si no 
-        //se ha llamado game no estará creado y lanzará excepción
+        //check if setMineField has been called, if not it will throw an exception
         try{
             c = game[0].length; //colums
             f = game.length;    //files
@@ -53,8 +52,8 @@ public class Initialize implements MineSweeper{
     
     
     private int[][] MatrizToInt(int aux[][]){
-        //si encuentro un . pongo un cero
-        //si encuentro un * pongo un 9 (una casilla como máximo va a tener 8 bombas alrededor)
+        //if there is a . change to 0
+        //if there is a * change to 9 (a cell can't have more than 8 bombs around itself)
         for(int i=0;i<f;i++){
             for (int j=0;j<c;j++){
                 if(game[i][j]=='.'){
@@ -67,44 +66,45 @@ public class Initialize implements MineSweeper{
         return aux;
     }
     /**
-     * Calcula la nueva matriz contando las bombas cercanas
-     * @param aux matriz inicializada a 0 y con 9 donde hay una bomba
-     * @return matriz con las bombas inicializadas
+     * Calculate the new matix counting the bombs around 
+     * @param aux matrix is initialized to 0 and to 9 in the place of a bomb
+     * @return matrix with all initialized bombs
      */
+    
     private int[][] Convert(int[][] aux){
-        //si encuentro un 9 sumo +1 a todas las casillas de alrededor si no es 9
+        //when I have a bomb (9) I add 1 to all cells around which are not bombs (9)
         for(int i=0;i<f;i++){
             for (int j=0;j<c;j++){
                 if(aux[i][j]==9){
-                    //diagonal izq superior
+                    //upper left side cell 
                     if(i>0&&j>0&&aux[i-1][j-1]!=9){
                         aux[i-1][j-1]++;
                     }
-                    //casilla superior
+                    //upper cell
                     if(i>0&&aux[i-1][j]!=9){
                         aux[i-1][j]++;
                     }
-                    //diagonal dch superior
+                    //upper right side cell
                     if(i>0&&j+1<c&&aux[i-1][j+1]!=9){
                         aux[i-1][j+1]++;
                     }
-                    //casilla izq
+                    //left side cell
                     if(j>0&&aux[i][j-1]!=9){
                         aux[i][j-1]++;
                     }
-                    //casilla dch
+                    //right side cell
                     if(j+1<c&&aux[i][j+1]!=9){
                         aux[i][j+1]++;
                     }
-                    //casilla izq inferior
+                    //bottom left side cell 
                     if(i+1<f&&j>0&&aux[i+1][j-1]!=9){
                         aux[i+1][j-1]++;
                     }
-                    //casilla inferior
+                    //bottom cell
                     if(i+1<f&&aux[i+1][j]!=9){
                         aux[i+1][j]++;
                     }
-                    //diagonal dch inferior
+                    //bottom right side cell
                     if(i+1<f&&j+1<c&&aux[i+1][j+1]!=9){
                         aux[i+1][j+1]++;
                     }
@@ -115,9 +115,9 @@ public class Initialize implements MineSweeper{
     }
     
     /**
-     * Convierte matriz de enteros en String
-     * @param aux matriz de enteros con el resultado
-     * @return resultado convertido en string
+     * Convert integer matrix into String
+     * @param aux integer final matrix
+     * @return String with final result
      */
     private String MatriztoString (int[][] aux){
         String result="";
